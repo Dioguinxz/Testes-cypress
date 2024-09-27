@@ -28,19 +28,39 @@ describe('Esperas', () => {
             .type('funciona')
     })
 
-    it.only('Uso do find', () => {
-        cy.get('#buttonList').click()
+    it('Uso do find', () => {
+        cy.get('#buttonListDOM').click()
         cy.get('#lista li')
             .find('span')
             .should('contain', 'Item 1')
-
+        // cy.get('#lista li')
+        //     .find('span')
+        //     .should('contain', 'Item 2')
         cy.get('#lista li span')
             .should('contain', 'Item 2')
     })
 
-    it.only("Uso do TimeOut", () => {
-        cy.get('#buttonDelay').click()
-        cy.get('#novoCampo').should('exist')
+    it("Uso do TimeOut", () => {
+        cy.get('#buttonListDOM').click()
+        cy.get('#lista li span')
+            .should('have.length', 1)
+        cy.get('#lista li span')
+            .should('have.length', 2)
+    })
 
+    it('Click e Retry', () => {
+        cy.get('#buttonCount')
+            .click()
+            .click()
+            .should('have.value', '111')
+    })
+
+    it.only('Should vs Then', () => {
+        cy.get('#buttonListDOM').then($el => {
+            // .should('have.length', 1)
+            // console.log($el)
+            expect($el).to.have.length(1)
+            cy.get('#buttonList')
+        })
     })
 })
